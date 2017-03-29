@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema;
+var Booking = require('../models/booking')
 
 /**
  * @apiDefine UserModel
@@ -21,5 +22,5 @@ var UserSchema = new Schema({
 });
 
 
-var User = mongoose.model('User', UserSchema)
+var User = mongoose.model('User', UserSchema);
 module.exports = User
