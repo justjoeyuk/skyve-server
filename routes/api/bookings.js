@@ -3,7 +3,7 @@ var router = express.Router();
 
 
 /**
- * @api {post} /bookings/ Create a new booking
+ * @api {post} /api/bookings/ Create a new booking
  * @apiName CreateBooking
  * @apiGroup Booking
  *

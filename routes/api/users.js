@@ -12,7 +12,7 @@ var User = require('../../models/user')
 // routes
 
 /**
- * @api {post} /users/ Create a new user
+ * @api {post} /api/users/ Create a new user
  * @apiName CreateUser
  * @apiGroup User
  *
@@ -44,7 +44,7 @@ router.post('/', function(req, res) {
 
 
 /**
- * @api {post} /users/login Authenticate a User
+ * @api {post} /api/users/login Authenticate a User
  * @apiName AutenticateUser
  * @apiGroup User
  *
