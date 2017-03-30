@@ -58,8 +58,8 @@ router.post("/login", function(req, res) {
   var rawPwd = req.body.pwd
 
   // find the user and include the pwd field
-  User.findOne({"email" : email}).select('+pwd -token').exec(function(err, userDoc) {
-    if (err) { res.send(err); return }
+  User.find({"email" : email}).select('+pwd -token').exec(function(err, results) {
+    if (results.count == 0 || err) { res.send(err || {"error":"Incorrect Credentials"}); return }
 
     // compare hashes to see if pwd is correct
     var validPassword = bcrypt.compareSync(rawPwd, userDoc.pwd);
