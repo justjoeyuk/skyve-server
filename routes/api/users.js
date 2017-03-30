@@ -59,7 +59,7 @@ router.post("/login", function(req, res) {
 
   // find the user and include the pwd field
   User.find({"email" : email}).select('+pwd -token').exec(function(err, results) {
-    if (results.count == 0 || err || results[0] == undefined) { res.send(err || {"error":"Incorrect Credentials"}); return }
+    if (results.count == 0 || err || results[0] == undefined) { res.status(400).send(err || {"error":"Incorrect Credentials"}); return }
     var userDoc = results[0]
 
     // compare hashes to see if pwd is correct
