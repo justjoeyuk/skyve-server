@@ -64,7 +64,7 @@ router.post("/login", function(req, res) {
 
     // compare hashes to see if pwd is correct
     var validPassword = bcrypt.compareSync(rawPwd, userDoc.pwd);
-    if (!validPassword) { res.send({"error":"Incorrect Credentials"}); return }
+    if (!validPassword) { res.status(400).send({"error":"Incorrect Credentials"}); return }
 
     // the password is valid, so generate a JWT token
     var token = jwt.sign(userDoc, constants.JWT_SECRET);
