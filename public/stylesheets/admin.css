@@ -1,0 +1,11 @@
+.sidebar {
+  background-color: #333333;
+  min-width:250px;
+  height: 100vh;
+}
+
+
+.content {
+  background-color: white;
+  height: 100vh;
+}

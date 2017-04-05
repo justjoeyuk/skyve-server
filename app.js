@@ -9,11 +9,12 @@ var jwt = require('express-jwt');
 var mongoose = require('mongoose');
 
 var index = require('./routes/index');
+var auth = require('./routes/auth');
+var admin = require('./routes/admin');
 var users = require('./routes/api/users');
 var bookings = require('./routes/api/bookings');
 
-var User = require('./models/user');
-
+var User = require("./models/user");
 var app = express();
 
 
@@ -40,18 +41,22 @@ function extractJWT (req) {
   } else if (req.query && req.query.token) {
     return req.query.token;
   }
+  else if (req.cookies.access_token) {
+    return req.cookies.access_token
+  }
+
   return null;
 }
 
 // use JWT authentication unless on specific paths
 app.use(jwt({ secret: constants.JWT_SECRET, getToken: extractJWT }).unless({
-  path: [/\/api\/users.*/g, '/docs']
+  path: [/\/api\/users.*/g, /\/docs.*/g, /\/auth.*/g]
 }))
 
-// show an error if we have an invalid token
 app.use(function (err, req, res, next) {
   if (err.name === 'UnauthorizedError') {
-    res.status(401).send('invalid token...');
+    res.status(401).redirect('/auth/login');
+    next(err)
   }
 });
 
@@ -66,10 +71,28 @@ app.use(function (req, res, next) {
   next()
 })
 
+// checks for admin priviledge in the "/admin" pages
+app.use('/admin', function (req, res, next) {
+  if (!req.user) {
+    res.redirect('/auth/login');
+  }
+  else if (req.user.acc_type != "admin") {
+    var err = new Error('Unauthorized');
+    err.status = 401;
+    next(err);
+  }
+  else {
+    next('route')
+  }
+})
+
 
 // MARK: Endpoints
 
-app.use('/', index);
+app.use('/', index)
+app.use('/auth', auth)
+app.use('/admin', admin)
+
 app.use('/api/users', users);
 app.use('/api/bookings', bookings)
 

@@ -10,7 +10,8 @@ var Booking = require('../models/booking')
  *     {
  *       "_id": "abc123def456"
  *       "email": "test@apposing.co.uk",
- *       "token": "{JWT_TOKEN}"
+ *       "token": "{JWT_TOKEN}",
+ *       "acc_type" : "admin|worker"
  *     }
  *
  */
@@ -18,6 +19,7 @@ var Booking = require('../models/booking')
 var UserSchema = new Schema({
     email: String,
     token: String,
+    acc_type: String,
     pwd: { type: String, select: false }
 });
 
