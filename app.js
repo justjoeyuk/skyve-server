@@ -50,7 +50,7 @@ function extractJWT (req) {
 
 // use JWT authentication unless on specific paths
 app.use(jwt({ secret: constants.JWT_SECRET, getToken: extractJWT }).unless({
-  path: [/\/api\/users.*/g, /\/docs.*/g, /\/auth.*/g]
+  path: [/\/api\/users\/login/g, /\/docs.*/g, /\/auth.*/g]
 }))
 
 app.use(function (err, req, res, next) {

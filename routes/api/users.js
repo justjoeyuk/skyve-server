@@ -24,7 +24,9 @@ var User = require('../../models/user')
 router.post('/', function(req, res) {
   var email = req.body.email
   var rawPwd = req.body.pwd
-  var accType = "admin"
+  var firstName = req.body.first_name
+  var lastName = req.body.last_name
+  var accType = "worker"
 
   // find any existing users and return error if exists
   User.findOne({ 'email': email }, 'email', function(err, userDoc) {
@@ -32,7 +34,13 @@ router.post('/', function(req, res) {
 
     // create a new user and bcrypt the passsword
     var pwdHash = bcrypt.hashSync(rawPwd);
-    var user = new User({ email: email, pwd: pwdHash, acc_type:accType })
+    var user = new User({
+      email: email,
+      pwd: pwdHash,
+      first_name: firstName,
+      last_name: lastName,
+      manager: req.user._id,
+      acc_type:accType })
 
     // save the user and then fetch it (so we don't return hashed password)
     user.save(function (err, results) {

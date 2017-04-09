@@ -1,0 +1,12 @@
+.col-2.sidebar
+  .logo
+    h1 Skyve
+    h2 Employee
+    
+  ul(style="margin-top:40px")
+    each button in buttons
+      - var href = "location.href='" + button.route + "'"
+      if button.current
+        button(onclick=href).current= button.title
+      else
+        button(onclick=href)= button.title
