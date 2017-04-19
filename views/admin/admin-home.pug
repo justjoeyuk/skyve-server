@@ -1,4 +1,20 @@
 extends admin-layout
 
 block admin-content
-  h1 DASHBOARD
+  h3= "Week commencing " + formattedWeekStart
+  br
+  br
+  
+  table.table
+    thead
+      tr
+        th Day
+        th Allocated Spaces
+    tbody
+      each val, index in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        tr
+          td= val
+          td
+            input(type="text")
+              
+  button(type="button" style="margin:0 auto")#save-button.btn.btn-primary Save

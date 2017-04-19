@@ -6,14 +6,35 @@ html,body,.container {
     height:100%;
 }
 
+
+/** HEADERS */
+
+h3 {
+  margin: 10px 0 10px 0;
+  font-size: 20pt;
+}
+
+/** TABLES */
+
+th {
+  font-weight: bold;
+  font-size: 14pt;
+}
+
 a {
   color: #00B7FF;
 }
+
+
+/** LISTS */
 
 ul {
   padding: 0px;
   margin: 0px;
 }
+
+
+/** CUSTOM */
 
 .centered {
   text-align: center;

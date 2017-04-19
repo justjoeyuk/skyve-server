@@ -14,6 +14,7 @@
     "express-jwt": "^5.1.0",
     "express-mongo-db": "^2.0.3",
     "jsonwebtoken": "^7.3.0",
+    "moment": "^2.18.1",
     "mongodb": "^2.2.25",
     "mongoose": "^4.9.2",
     "morgan": "~1.7.0",

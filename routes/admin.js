@@ -1,9 +1,11 @@
 var express = require('express');
 var path    = require("path");
+var moment = require('moment');
 var router = express.Router();
 
 // import models
-var User = require('../models/user')
+var User = require('../models/user');
+var Constants = require('../models/constants');
 
 
 function getButtons(index) {
@@ -27,7 +29,13 @@ function getPageParameters(currentParams, req, pageIndex) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('admin/admin-home', getPageParameters({}, req, 0));
+  var monday = Constants.getMonday(new Date());
+  var formattedMonday = moment(monday).format('DD/MM/YYYY');
+
+  res.render('admin/admin-home', getPageParameters({
+    weekStart: monday,
+    formattedWeekStart: formattedMonday
+  }, req, 0));
 });
 
 
