@@ -1,6 +1,8 @@
 extends admin-layout
 
 block admin-content
+  script(src='/js/admin/home.js')
+  
   h3= "Week commencing " + formattedWeekStart
   br
   br
@@ -18,3 +20,4 @@ block admin-content
             input(type="text")
               
   button(type="button" style="margin:0 auto")#save-button.btn.btn-primary Save
+  span(style="display:none")#week-start-epoch= weekStart

@@ -33,7 +33,7 @@ router.get('/', function(req, res, next) {
   var formattedMonday = moment(monday).format('DD/MM/YYYY');
 
   res.render('admin/admin-home', getPageParameters({
-    weekStart: monday,
+    weekStart: monday.getTime() / 1000,
     formattedWeekStart: formattedMonday
   }, req, 0));
 });

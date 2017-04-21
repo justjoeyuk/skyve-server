@@ -13,6 +13,7 @@ var auth = require('./routes/auth');
 var admin = require('./routes/admin');
 var users = require('./routes/api/users');
 var bookings = require('./routes/api/bookings');
+var allocations = require('./routes/api/allocations');
 
 var User = require("./models/user");
 var app = express();
@@ -95,6 +96,7 @@ app.use('/admin', admin)
 
 app.use('/api/users', users);
 app.use('/api/bookings', bookings)
+app.use('/api/allocations', allocations)
 
 
 // MARK: Error Handling
