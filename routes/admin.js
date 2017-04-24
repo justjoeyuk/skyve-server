@@ -5,6 +5,7 @@ var router = express.Router();
 
 // import models
 var User = require('../models/user');
+var Week = require('../models/week');
 var Constants = require('../models/constants');
 
 
@@ -30,12 +31,16 @@ function getPageParameters(currentParams, req, pageIndex) {
 /* GET home page. */
 router.get('/', function(req, res, next) {
   var monday = Constants.getMonday(new Date());
+  var mondayStartTime = monday.getTime() / 1000
   var formattedMonday = moment(monday).format('DD/MM/YYYY');
 
-  res.render('admin/admin-home', getPageParameters({
-    weekStart: monday.getTime() / 1000,
-    formattedWeekStart: formattedMonday
-  }, req, 0));
+  Week.findOne({"start_time":mondayStartTime}).populate("allocations").exec(function(err, existingWeek) {
+    res.render('admin/admin-home', getPageParameters({
+      weekStart: mondayStartTime,
+      week: existingWeek,
+      formattedWeekStart: formattedMonday
+    }, req, 0));
+  })
 });
 
 

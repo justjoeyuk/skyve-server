@@ -17,7 +17,9 @@ block admin-content
         tr
           td= val
           td
-            input(type="text")
+            - var spaces = week.allocations[index].allocated_spaces
+            - var iid = "s" + index
+            input(type="text" value=spaces id=iid)
               
   button(type="button" style="margin:0 auto")#save-button.btn.btn-primary Save
   span(style="display:none")#week-start-epoch= weekStart
