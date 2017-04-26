@@ -34,6 +34,10 @@ router.get('/', function(req, res, next) {
   var mondayStartTime = monday.getTime() / 1000
   var formattedMonday = moment(monday).format('DD/MM/YYYY');
 
+  console.log(mondayStartTime);
+  console.log(existingWeek);
+  console.log(formattedMonday);
+  
   Week.findOne({"start_time":mondayStartTime}).populate("allocations").exec(function(err, existingWeek) {
     res.render('admin/admin-home', getPageParameters({
       weekStart: mondayStartTime,
