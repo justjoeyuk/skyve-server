@@ -35,7 +35,7 @@ router.get('/', function(req, res, next) {
   var formattedMonday = moment(monday).format('DD/MM/YYYY');
 
   Week.findOne({"start_time":mondayStartTime}).populate("allocations").exec(function(err, existingWeek) {
-    console.log(monday);
+    console.log(monday.getTime());
     console.log(mondayStartTime);
     console.log(existingWeek);
     console.log(formattedMonday);
