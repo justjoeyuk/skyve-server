@@ -100,7 +100,8 @@ var Week = require('../../models/week')
        model: "Booking",
        populate: {
          path: "_user",
-         model: "User"
+         model: "User",
+         select: "-token"
        }
      }
    }).exec(function(err, existingWeek) {
