@@ -93,7 +93,13 @@ var Week = require('../../models/week')
    var weekStartTime = Constants.getMonday(new Date(startTime))
 
    console.log("Geting allocations for Week starting " + weekStartTime)
-   Week.findOne({"start_time":weekStartTime}).populate("allocations").exec(function(err, existingWeek) {
+   Week.findOne({"start_time":weekStartTime}).populate({
+     path: "allocations",
+     populate: {
+       path: "bookings",
+       model: "Booking"
+     }
+   }).exec(function(err, existingWeek) {
      if (err) { res.status(500).send(err); return }
      res.status(200).send(existingWeek)
    })
