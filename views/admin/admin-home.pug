@@ -24,7 +24,7 @@ block admin-content
             input(type="text" value=spaces id=iid)
           td
             each val, index in allocation.bookings
-              span= "[" + val._user.first_name + " " + val._user.last_name + "] "
+              span= val._user.first_name + " " + val._user.last_name + (index < allocation.bookings.length - 1 ? "," : "")
               
   button(type="button" style="margin:0 auto")#save-button.btn.btn-primary Save
   span(style="display:none")#week-start-epoch= weekStart
