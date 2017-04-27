@@ -99,7 +99,7 @@ var Week = require('../../models/week')
        path: "bookings",
        model: "Booking",
        populate: {
-         path: "user",
+         path: "_user",
          model: "User"
        }
      }
