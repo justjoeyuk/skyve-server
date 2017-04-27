@@ -25,8 +25,7 @@ var Week = require('../../models/week')
    var spaces = req.body.spaces
 
    console.log("Creating Allocations For: " + startTime + ", " + spaces);
-
-   var weekStartTime = Constants.getMonday(new Date(startTime)).getTime() / 1000
+   var weekStartTime = Constants.getMonday(new Date(startTime))
 
    // Create or update the week
    Week.findOne({"start_time": weekStartTime}).populate('allocations').exec(function(err, existingWeek) {
@@ -91,7 +90,7 @@ var Week = require('../../models/week')
   */
  router.get('/', function(req, res) {
    var startTime = parseInt(req.query.start_time, 10) * 1000
-   var weekStartTime = Constants.getMonday(new Date(startTime)).getTime() / 1000
+   var weekStartTime = Constants.getMonday(new Date(startTime))
 
    console.log("Geting allocations for Week starting " + weekStartTime)
    Week.findOne({"start_time":weekStartTime}).populate("allocations").exec(function(err, existingWeek) {

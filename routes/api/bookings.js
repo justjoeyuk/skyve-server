@@ -5,6 +5,7 @@ var router = express.Router();
 // models
 var User = require('../../models/user')
 var Booking = require('../../models/booking')
+var Allocation = require('../../models/allocation')
 
 
 /**
@@ -14,7 +15,7 @@ var Booking = require('../../models/booking')
  *
  * @apiUse AuthHeader
  *
- * @apiParam {Integer} start_time The epoch timestamp (seconds) of the booking start time (midnight)
+ * @apiParam {String} allocation_id The ID of the allocation which to book
  *
  * @apiUse BookingModel
  *
@@ -25,21 +26,32 @@ var Booking = require('../../models/booking')
  *     }
  */
 router.post('/', function(req, res) {
-  var startTime = req.body.start_time
+  var allocationID = req.body.allocation_id
 
-  // check to see if the user has already booked this time off
-  Booking.findOne({"start_time": startTime, "_user": req.user._id}, function(err, existingBooking) {
-    if (err || existingBooking) { res.status(400).send({"error" : "Already booked"}); return }
+  Allocation.findOne({"_id":allocationID}, function(err, allocation) {
+    if (err || !allocation) { res.status(400).send({"error" : "No such allocation"}); return }
 
-    var newBooking = new Booking({
-      "start_time": startTime,
-      "_user": req.user
-    })
+    Booking.findOne({"allocation_id": allocationID, "_user": req.user._id}, function(err, existingBooking) {
+      if (err || existingBooking) { res.status(400).send({"error" : "Already booked"}); return }
 
-    newBooking.save(function (err, results) {
-      res.send(results)
+      var newBooking = new Booking({
+        "allocation_id": allocationID,
+        "_user": req.user
+      })
+
+      newBooking.save(function (err, results) {
+        if (err) { res.status(400).send({"error" : "Could not save booking"}); return }
+        allocation.bookings.push(newBooking)
+
+        allocation.save(function(err, results) {
+          if (err) { res.status(400).send({"error" : "Could not update allocation"}); return }
+          res.send(newBooking)
+        })
+      })
     })
   })
+  // check to see if the user has already booked this time off
+
 })
 
 /**

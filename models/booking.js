@@ -18,7 +18,7 @@ var ObjectId = Schema.Types.ObjectId;
 
 var BookingSchema = new Schema({
     _user: { type: ObjectId, ref: 'User' },
-    start_time: Number
+    allocation_id: { type: ObjectId, ref: 'Allocation' }
 });
 
 var Booking = mongoose.model('Booking', BookingSchema);

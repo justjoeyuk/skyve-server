@@ -30,9 +30,8 @@ function getPageParameters(currentParams, req, pageIndex) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  var monday = Constants.getMonday(new Date());
-  var mondayStartTime = monday.getTime() / 1000
-  var formattedMonday = moment(monday).format('DD/MM/YYYY');
+  var mondayStartTime = Constants.getMonday(new Date());
+  var formattedMonday = moment(mondayStartTime).format('DD/MM/YYYY');
 
   Week.findOne({"start_time":mondayStartTime}).populate("allocations").exec(function(err, existingWeek) {
     res.render('admin/admin-home', getPageParameters({
