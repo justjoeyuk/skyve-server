@@ -12,14 +12,20 @@ block admin-content
       tr
         th Day
         th Allocated Spaces
+        th Workers Booked
     tbody
       each val, index in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
         tr
+          - var allocation = week.allocations[index]
           td= val
           td
-            - var spaces = week.allocations[index].allocated_spaces
+            - var spaces = allocation.allocated_spaces
             - var iid = "s" + index
             input(type="text" value=spaces id=iid)
+          td
+            each val, index in allocation.bookings
+              - var user = allocation.bookings[index].user
+              span= "[" + user.email + "] "
               
   button(type="button" style="margin:0 auto")#save-button.btn.btn-primary Save
   span(style="display:none")#week-start-epoch= weekStart

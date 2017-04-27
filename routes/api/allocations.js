@@ -97,7 +97,11 @@ var Week = require('../../models/week')
      path: "allocations",
      populate: {
        path: "bookings",
-       model: "Booking"
+       model: "Booking",
+       populate: {
+         path: "user",
+         model: "User"
+       }
      }
    }).exec(function(err, existingWeek) {
      if (err) { res.status(500).send(err); return }
