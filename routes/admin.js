@@ -33,6 +33,9 @@ router.get('/', function(req, res, next) {
   var mondayStartTime = Constants.getMonday(new Date()) / 1000;
   var formattedMonday = moment(mondayStartTime).format('DD/MM/YYYY');
 
+  console.log(mondayStartTime * 1000)
+  console.log(mondayStartTime)
+
   Week.findOne({"start_time":mondayStartTime})
   .populate({path: "allocations", populate: { path: "bookings", model: "Booking", populate: { path: "_user", model: "User", select: "-token" }}})
   .exec(function(err, existingWeek) {
