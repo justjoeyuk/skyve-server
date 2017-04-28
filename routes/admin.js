@@ -31,9 +31,8 @@ function getPageParameters(currentParams, req, pageIndex) {
 /* GET home page. */
 router.get('/', function(req, res, next) {
   var mondayStartTime = Constants.getMonday(new Date()) / 1000;
-  var formattedMonday = moment(mondayStartTime).format('DD/MM/YYYY');
+  var formattedMonday = moment(mondayStartTime * 1000).format('DD/MM/YYYY');
 
-  console.log(mondayStartTime * 1000)
   console.log(mondayStartTime)
 
   Week.findOne({"start_time":mondayStartTime})
