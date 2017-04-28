@@ -8,12 +8,13 @@ var Constants = {
   JWT_SECRET : "jwt_secret_328",
 
   getMonday : function(date) {
-    date = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 0, 0, 0);
-
-    var day = date.getUTCDay(),
-        diff = date.getUTCDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
-
-    return new Date(date.setUTCDate(diff)).getTime();
+    var day = date.getUTCDay() || 7;
+    if( day !== 1 )
+        date.setUTCHours(-24 * (day - 1));
+        date.setUTCMinutes(0)
+        date.setUTCSeconds(0)
+        date.setUTCMilliseconds(0)
+    return date;
   }
 }
 
