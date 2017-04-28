@@ -9,9 +9,11 @@ var Constants = {
 
   getMonday : function(date) {
     date = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
-    var day = date.getDay(),
-        diff = date.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
-    return moment.tz(new Date(date.setDate(diff)).getTime(), "Europe/London").unix();
+
+    var day = date.getUTCDay(),
+        diff = date.getUTCDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+
+    return new Date(date.setUTCDate(diff)).getTime();
   }
 }
 
